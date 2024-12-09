@@ -1,3 +1,4 @@
+#CÓDIGO EM PYTHON#
 def help_the_federation():
     import sys
     input = sys.stdin.read
