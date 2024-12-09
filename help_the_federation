@@ -1,0 +1,58 @@
+def help_the_federation():
+    import sys
+    input = sys.stdin.read
+    data = input().strip().split("\n")
+    
+    T = int(data[0])  # Número de casos de teste
+    idx = 1
+    resultados = []
+    
+    for _ in range(T):
+        N, M = map(int, data[idx].split())
+        idx += 1
+        
+        # Nomes dos times
+        times = [data[idx + i] for i in range(N)]
+        idx += N
+        
+        # Inicialização dos dados dos times
+        estatisticas = {time: {"pontos": 0, "vitorias": 0, "gols": 0, "ordem": i} for i, time in enumerate(times)}
+        
+        # Processamento dos jogos
+        for _ in range(M):
+            x, timeA, y, timeB = data[idx].split()
+            x, y = int(x), int(y)
+            idx += 1
+            
+            # Atualização das estatísticas
+            estatisticas[timeA]["gols"] += x
+            estatisticas[timeB]["gols"] += y
+            
+            if x > y:  # Vitória de timeA
+                estatisticas[timeA]["pontos"] += 3
+                estatisticas[timeA]["vitorias"] += 1
+            elif y > x:  # Vitória de timeB
+                estatisticas[timeB]["pontos"] += 3
+                estatisticas[timeB]["vitorias"] += 1
+            else:  # Empate
+                estatisticas[timeA]["pontos"] += 1
+                estatisticas[timeB]["pontos"] += 1
+        
+        # Ordenação dos times
+        ranking = sorted(times, key=lambda time: (
+            -estatisticas[time]["pontos"], 
+            -estatisticas[time]["vitorias"], 
+            -estatisticas[time]["gols"], 
+            estatisticas[time]["ordem"]
+        ))
+        
+        # Adiciona os resultados deste caso ao buffer
+        resultados.append("\n".join(ranking))
+    
+    # Exibir os resultados com separação correta entre os casos de teste
+    print("\n\n".join(resultados).strip())
+
+
+# Execução principal
+if __name__ == "__main__":
+    help_the_federation()
