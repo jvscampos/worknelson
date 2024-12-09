@@ -1,0 +1,22 @@
+def josephus(n, k):
+    """
+    Função para calcular a posição do sobrevivente no problema de Josephus
+    :param n: Número de pessoas no círculo
+    :param k: Tamanho do passo
+    :return: Posição do sobrevivente (1-indexada)
+    """
+    survivor = 0  # Base para n = 1
+    for i in range(2, n + 1):
+        survivor = (survivor + k) % i
+    return survivor + 1  # Ajustar para posição 1-indexada
+
+
+if __name__ == "__main__":
+    # Número de casos de teste
+    nc = int(input().strip())
+    
+    for case in range(1, nc + 1):
+        # Entrada: número de pessoas e tamanho do passo
+        n, k = map(int, input().strip().split())
+        # Saída formatada estritamente como esperado
+        print(f"Case {case}: {josephus(n, k)}")
